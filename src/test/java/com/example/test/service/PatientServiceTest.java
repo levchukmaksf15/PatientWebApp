@@ -73,7 +73,6 @@ public class PatientServiceTest {
     @Test
     void changeInformationAboutPatient_correctData_returnUpdatedPatient() {
         UUID id = UUID.randomUUID();
-//        patient.setId(id);
 
         when(patientRepository.existsByName("Test name")).thenReturn(false);
         when(patientRepository.existsByIdAndIsDischargedIsFalse(id)).thenReturn(true);
@@ -133,7 +132,7 @@ public class PatientServiceTest {
 
     @Test
     void getAllNotDischargedPatients_thereAreNoDischargedPatients_returnPatientList() {
-        when(patientRepository.findByIsDischargedIsFalse()).thenReturn(List.of(patient));
+        when(patientRepository.findByIsDischargedIsFalseOrderByNameAsc()).thenReturn(List.of(patient));
 
         List<PatientDto> actualResult = patientService.getAllNotDischargedPatients();
         List<PatientDto> expectedResult = List.of(patientMapper.toPatientDto(patient));
@@ -143,7 +142,7 @@ public class PatientServiceTest {
 
     @Test
     void getAllNotDischargedPatients_thereAreNoPatients_returnEmptyList() {
-        when(patientRepository.findByIsDischargedIsFalse()).thenReturn(List.of());
+        when(patientRepository.findByIsDischargedIsFalseOrderByNameAsc()).thenReturn(List.of());
 
         List<PatientDto> actualResult = patientService.getAllNotDischargedPatients();
         List<PatientDto> expectedResult = List.of();
