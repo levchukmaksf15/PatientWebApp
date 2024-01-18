@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,13 +69,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDto> getAllNotDischargedPatients() {
-        List<Patient> patientList = patientRepository.findByIsDischargedIsFalse();
+        List<Patient> patientList = patientRepository.findByIsDischargedIsFalseOrderByNameAsc();
 
         if (patientList.isEmpty()) {
             return new ArrayList<>();
         }
 
-        return patientList.stream()
-                .map(patientMapper::toPatientDto).collect(Collectors.toList());
+        return patientList.stream().map(patientMapper::toPatientDto).toList();
     }
 }

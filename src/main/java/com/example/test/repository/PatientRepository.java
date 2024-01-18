@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface PatientRepository extends JpaRepository<Patient, UUID> {
     boolean existsByName(String name);
     boolean existsByIdAndIsDischargedIsFalse(UUID id);
-    List<Patient> findByIsDischargedIsFalse();
+    List<Patient> findByIsDischargedIsFalseOrderByNameAsc();
 }

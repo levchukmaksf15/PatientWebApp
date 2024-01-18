@@ -23,7 +23,6 @@ import static com.example.test.service.implementation.PatientServiceImpl.NOT_UNI
 import static com.example.test.service.implementation.PatientServiceImpl.NO_PATIENT_BY_ID_OR_IS_DISCHARGED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -135,15 +134,20 @@ public class PatientServiceTest {
     @Test
     void getAllNotDischargedPatients_thereAreNoDischargedPatients_returnPatientList() {
         when(patientRepository.findByIsDischargedIsFalse()).thenReturn(List.of(patient));
-    }
 
-    @Test
-    void getAllNotDischargedPatients_thereAreOnlyDischargedPatients_returnEmptyList() {
+        List<PatientDto> actualResult = patientService.getAllNotDischargedPatients();
+        List<PatientDto> expectedResult = List.of(patientMapper.toPatientDto(patient));
 
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
     void getAllNotDischargedPatients_thereAreNoPatients_returnEmptyList() {
+        when(patientRepository.findByIsDischargedIsFalse()).thenReturn(List.of());
 
+        List<PatientDto> actualResult = patientService.getAllNotDischargedPatients();
+        List<PatientDto> expectedResult = List.of();
+
+        assertEquals(expectedResult, actualResult);
     }
 }
