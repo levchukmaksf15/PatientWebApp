@@ -1,7 +1,6 @@
 package com.example.test.service;
 
 import com.example.test.controller.dto.PatientDto;
-import com.example.test.model.entity.Patient;
 
 import java.util.List;
 import java.util.UUID;
